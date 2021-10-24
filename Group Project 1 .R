@@ -107,5 +107,26 @@ ggstripchart(mydata, x = "assignee_state_factor", y = "years_elapsed",
 
 
 
+#group data by country to find how many patents have each country
+mydata_by_country <- mydata %>%
+  group_by(ee_country) %>%
+  summarize(count = n())
+
+head(mydata_by_country)
+
+#order the data in decreasing order
+mydata_by_countrynew <- mydata_by_country[order(mydata_by_country$count, decreasing = TRUE), ]
+
+#select the top 10 countries with the highest number of patents
+top10 <- mydata_by_countrynew [1:10,]
+
+#graph the top10 countries 
+top10new <- data.frame(countries=c('US', 'JP', 'KR', 'DE', "TW", "CN", "FR", "CH", "GB", "CA"),
+                       number_of_patents=c(14109, 5428, 1895, 1462, 1102, 903, 693, 434, 404, 397))
+
+ggplot(top10new, aes(x=countries, y=number_of_patents))+
+  geom_bar(stat='identity')+
+  ggtitle("The 10 Cuntries with highest number of Patents ") +
+  xlab("Countires") + ylab("Number of Patents")
 
 
