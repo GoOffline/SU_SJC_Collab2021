@@ -126,8 +126,14 @@ top10new <- data.frame(countries=c('US', 'JP', 'KR', 'DE', "TW", "CN", "FR", "CH
 
 ggplot(top10new, aes(x=countries, y=number_of_patents))+
   geom_bar(stat='identity')+
-  ggtitle("The 10 Cuntries with highest number of Patents ") +
+  ggtitle("The 10 Countries with highest number of Patents ") +
   xlab("Countires") + ylab("Number of Patents")
+
+#explore years patents granted 
+#group data by year 
+mydata_by_year_granted <- mydata %>%
+  group_by(grant_year_factor) %>%
+  summarize(count = n())
 
 #graph number of patents by year 
 ggplot(mydata_by_year_granted, aes(x=grant_year_factor, y=count))+
@@ -151,7 +157,6 @@ top10co <- mydata_by_company [1:10,]
 ggplot(top10co, aes(x=count, y=assignee_company_name_factor))+
   geom_bar(stat='identity')+
   ggtitle("The 10 Companies with highest number of Patents ") +
-  xlab("Countires") + ylab("Number of Patents")+ 
+  xlab("Number of Patents") + ylab("Companies")+ 
   theme(axis.text.y = element_text(angle = 45))
-
 
