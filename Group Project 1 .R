@@ -129,4 +129,29 @@ ggplot(top10new, aes(x=countries, y=number_of_patents))+
   ggtitle("The 10 Cuntries with highest number of Patents ") +
   xlab("Countires") + ylab("Number of Patents")
 
+#graph number of patents by year 
+ggplot(mydata_by_year_granted, aes(x=grant_year_factor, y=count))+
+  geom_bar(stat = 'identity')+
+  ggtitle("Patents Granted by Year") +
+  xlab("Year Granted") + ylab("Number of Patents")
+
+#explore top companies 
+#group data by country to find how many patents have each country
+mydata_by_company <- mydata %>%
+  group_by(assignee_company_name_factor) %>%
+  summarize(count = n())
+
+#order the data in decreasing order
+mydata_by_company <- mydata_by_company[order(mydata_by_company$count, decreasing = TRUE), ]
+
+#select the top 10 companies with the highest number of patents
+top10co <- mydata_by_company [1:10,]
+
+#graph the top10 companies and their patents  
+ggplot(top10co, aes(x=count, y=assignee_company_name_factor))+
+  geom_bar(stat='identity')+
+  ggtitle("The 10 Cuntries with highest number of Patents ") +
+  xlab("Countires") + ylab("Number of Patents")+ 
+  theme(axis.text.y = element_text(angle = 45))
+
 
